@@ -1,6 +1,15 @@
 name: Build CI
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/build.yml"
+      - "kernel/**"
+      - "user/**"
+      - "tools/**"
+      - "kpms/**"
+      - "version"
   workflow_call:
   workflow_dispatch:
 
@@ -37,6 +46,8 @@ jobs:
           make
           mv kpimg kpimg-android
           mv kpimg.elf kpimg.elf-android
+          # FolkPatch compat: also publish as kpatch-android
+          cp kpimg-android kpatch-android
           make clean
 
           unset ANDROID
@@ -76,12 +87,14 @@ jobs:
           artifacts: |
             kernel/kpimg-linux
             kernel/kpimg-android
+            kernel/kpatch-android
             kpms/demo-hello/demo-hello.kpm
             kpms/demo-inlinehook/demo-inlinehook.kpm
             kpms/demo-syscallhook/demo-syscallhook.kpm
           generateReleaseNotes: true
           allowUpdates: true
           replacesArtifacts: true
+          makeLatest: true
  
 
   Release-user-lib:
