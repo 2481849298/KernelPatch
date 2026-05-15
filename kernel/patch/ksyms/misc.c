@@ -595,13 +595,13 @@ static void _linux_security_selinux_sym_match(const char *name, unsigned long ad
 {
     // kvar_match(selinux_enabled_boot, name, addr);
     // kvar_match(selinux_enabled, name, addr);
-    // kvar_match(selinux_state, name, addr);
+    kvar_match(selinux_state, name, addr);
     // kvar_match(secclass_map, name, addr);
     // kfunc_match(security_mls_enabled, name, addr);
     // kfunc_match(security_load_policy, name, addr);
     // kfunc_match(selinux_policy_commit, name, addr);
     // kfunc_match(selinux_policy_cancel, name, addr);
-    // kfunc_match(security_read_policy, name, addr);
+    kfunc_match(security_read_policy, name, addr);
     // kfunc_match(security_read_state_kernel, name, addr);
     // kfunc_match(security_policycap_supported, name, addr);
     // kfunc_match(security_compute_av, name, addr);

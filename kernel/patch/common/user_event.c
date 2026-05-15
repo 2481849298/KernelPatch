@@ -7,6 +7,7 @@
 #include <userd.h>
 #include <baselib.h>
 #include <log.h>
+#include "selinux_hide.h"
 
 int report_user_event(const char *event, const char *args)
 {
@@ -14,6 +15,11 @@ int report_user_event(const char *event, const char *args)
     const char *safe_args = args ? args : "";
 
     #ifdef ANDROID
+    if (lib_strcmp(safe_event, "late-init") == 0 && lib_strcmp(safe_args, "before") == 0) {
+        int hide_rc = kpatch_selinux_hide_prepare();
+        log_boot("late-init: selinux hide prepare rc=%d\n", hide_rc);
+    }
+
     if (lib_strcmp(safe_event, "post-fs-data") == 0) {
         log_boot("post-fs-data: loading ap package config ...\n");
         load_ap_package_config();
