@@ -8,6 +8,7 @@
 #include <linux/cred.h>
 #include <linux/capability.h>
 #include <syscall.h>
+#include "../patch/common/selinux_hide.h"
 #include <module.h>
 #include <predata.h>
 #include <symbol.h>
@@ -98,6 +99,9 @@ static void before_rest_init(hook_fargs4_t *args, void *udata)
 
     rc = android_user_init();
     log_boot("android_user_init done: %d\n", rc);
+
+    rc = kpatch_selinux_hide_init();
+    log_boot("selinux_hide_init done: %d\n", rc);
 #endif
 
 out:

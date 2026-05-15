@@ -67,6 +67,9 @@ ${TARGET}.elf: ${OBJS}
 base/sha256.o: base/sha256.c
 	${CC} $(CFLAGS) $(INCLUDE) -c -O0 -o $@ $<
 
+patch/common/selinux_hide.o: patch/common/selinux_hide.c
+	${CC} $(CFLAGS) $(INCLUDE) -c -O2 -fno-stack-protector -fno-pic -fno-pie -o $@ $<
+
 %.o: %.S
 	${CC} $(CFLAGS) $(INCLUDE) -c -o $@ $<
 
