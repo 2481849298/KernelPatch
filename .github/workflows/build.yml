@@ -176,8 +176,6 @@ jobs:
           cmake --build .
           ${{ steps.setup-ndk.outputs.ndk-path }}/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip kptools
           mv kptools kptools-android
-          # FolkPatch compat: provide kpatch-android as the same ELF tool.
-          cp kptools-android kpatch-android
 
 
       - name: Release
@@ -187,7 +185,6 @@ jobs:
           tag: ${{ steps.parse_version.outputs.VERSION }}
           artifacts: |
             tools/build/android/kptools-android
-            tools/build/android/kpatch-android
           allowUpdates: true
           replacesArtifacts: true
           makeLatest: true
