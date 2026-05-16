@@ -46,8 +46,6 @@ jobs:
           make
           mv kpimg kpimg-android
           mv kpimg.elf kpimg.elf-android
-          # FolkPatch compat: also publish as kpatch-android
-          cp kpimg-android kpatch-android
           make clean
 
           unset ANDROID
@@ -87,7 +85,6 @@ jobs:
           artifacts: |
             kernel/kpimg-linux
             kernel/kpimg-android
-            kernel/kpatch-android
             kpms/demo-hello/demo-hello.kpm
             kpms/demo-inlinehook/demo-inlinehook.kpm
             kpms/demo-syscallhook/demo-syscallhook.kpm
@@ -179,6 +176,8 @@ jobs:
           cmake --build .
           ${{ steps.setup-ndk.outputs.ndk-path }}/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip kptools
           mv kptools kptools-android
+          # FolkPatch compat: provide kpatch-android as the same ELF tool.
+          cp kptools-android kpatch-android
 
 
       - name: Release
@@ -188,8 +187,10 @@ jobs:
           tag: ${{ steps.parse_version.outputs.VERSION }}
           artifacts: |
             tools/build/android/kptools-android
+            tools/build/android/kpatch-android
           allowUpdates: true
           replacesArtifacts: true
+          makeLatest: true
  
 
   Build-kptools-linux:
