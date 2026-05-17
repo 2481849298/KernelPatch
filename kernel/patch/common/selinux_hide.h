@@ -5,7 +5,6 @@
 
 int kpatch_selinux_hide_init(void);
 int kpatch_selinux_hide_prepare(void);
-int kpatch_selinux_hide_start_enforce(void);
 void kpatch_selinux_hide_exit(void);
 
 #endif

@@ -58,6 +58,7 @@ int su_compat_init();
 #ifdef ANDROID
 int android_user_init();
 int android_sepolicy_flags_fix();
+int kpatch_selinux_hide_prepare(void);
 #endif
 
 static void before_rest_init(hook_fargs4_t *args, void *udata)
@@ -76,6 +77,11 @@ static void before_rest_init(hook_fargs4_t *args, void *udata)
 
     if ((rc = bypass_selinux())) goto out;
     log_boot("bypass_selinux done: %d\n", rc);
+
+#ifdef ANDROID
+    rc = kpatch_selinux_hide_prepare();
+    log_boot("kpatch_selinux_hide_prepare done: %d\n", rc);
+#endif
 
     if ((rc = task_observer())) goto out;
     log_boot("task_observer done: %d\n", rc);

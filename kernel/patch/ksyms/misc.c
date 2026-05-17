@@ -591,6 +591,8 @@ void kfunc_def(ebitmap_cache_init)(void) = 0;
 void kfunc_def(hashtab_cache_init)(void) = 0;
 int kfunc_def(security_sidtab_hash_stats)(char *page) = 0;
 
+int kfunc_def(security_setprocattr)(const char *lsm, const char *name, void *value, size_t size) = 0;
+
 static void _linux_security_selinux_sym_match(const char *name, unsigned long addr)
 {
     // kvar_match(selinux_enabled_boot, name, addr);
@@ -598,10 +600,11 @@ static void _linux_security_selinux_sym_match(const char *name, unsigned long ad
     kvar_match(selinux_state, name, addr);
     // kvar_match(secclass_map, name, addr);
     // kfunc_match(security_mls_enabled, name, addr);
-    // kfunc_match(security_load_policy, name, addr);
+    kfunc_match(security_load_policy, name, addr);
     // kfunc_match(selinux_policy_commit, name, addr);
-    // kfunc_match(selinux_policy_cancel, name, addr);
+    kfunc_match(selinux_policy_cancel, name, addr);
     kfunc_match(security_read_policy, name, addr);
+    kfunc_match(security_setprocattr, name, addr);
     // kfunc_match(security_read_state_kernel, name, addr);
     // kfunc_match(security_policycap_supported, name, addr);
     // kfunc_match(security_compute_av, name, addr);
